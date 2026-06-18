@@ -130,4 +130,4 @@ This Resume Analyzer project demonstrates how NLP, Machine Learning, and Generat
    streamlit run app.py
 
 - Open browser at
-   http://localhost:8501
+   http://localhost:****
