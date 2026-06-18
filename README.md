@@ -4,6 +4,8 @@ This project analyzes a candidate's resume against a job description  using AI a
 
 This project analyzes a candidate's resume against a job description using AI and Machine Learning techniques. The objective is to help job seekers understand how well their resume matches a role, identify missing skills, predict ATS compatibility, and receive AI-powered suggestions to improve their resume before applying.
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 🎯 Objectives
 
 - Automatically extract text from resume files (PDF, DOCX, TXT)
@@ -14,6 +16,8 @@ This project analyzes a candidate's resume against a job description using AI an
 - Detect skills present in job description but missing from resume
 - Generate personalized AI suggestions using RAG and FAISS
 - Display all results on an interactive web dashboard
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 🛠️ Technologies Used
 
@@ -30,6 +34,8 @@ This project analyzes a candidate's resume against a job description using AI an
 - Regex (re)
 - Joblib
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 ⚙️ Algorithms Used
 
 - TF-IDF (Term Frequency - Inverse Document Frequency) — Keyword similarity
@@ -39,6 +45,8 @@ This project analyzes a candidate's resume against a job description using AI an
 - FAISS (IndexFlatIP) — Fast vector search for relevant suggestions
 - RAG (Retrieval Augmented Generation) — AI suggestion generation
 - Regex Pattern Matching — Skill extraction from text
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ✨ Features
 
@@ -52,6 +60,8 @@ This project analyzes a candidate's resume against a job description using AI an
 - AI Suggestions — personalized tips to improve resume (RAG + FAISS)
 - Interactive Sidebar — user-friendly guidance for non-technical users
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 🗂️ Project Structure
 
 resume_analyzer/
@@ -63,6 +73,8 @@ resume_analyzer/
  - ats_model.py            → XGBoost ATS score predictor
  - rag_suggestions.py      → FAISS + RAG AI suggestion engine
  - requirements.txt        → All required Python libraries
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ⚙️ How It Works
 
@@ -77,6 +89,8 @@ resume_analyzer/
 - Step 9 — FAISS retrieves most relevant tips from knowledge base
 - Step 10 — AI suggestions are generated and displayed on dashboard
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 🔍 Key Findings / Output
 
 - ATS Score shows overall resume compatibility with the job (0 to 100)
@@ -86,6 +100,8 @@ resume_analyzer/
 - Missing skills list tells exactly what to add to improve the resume
 - AI suggestions give specific, actionable tips based on the user's situation
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 🔌 API Usage
 
 - No external API is used in this project
@@ -94,9 +110,13 @@ resume_analyzer/
 - After first run the app works fully offline with no internet required
 - Resume data never leaves the user's machine — complete privacy
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 🔎 Conclusion
 
 This Resume Analyzer project demonstrates how NLP, Machine Learning, and Generative AI techniques can be combined to solve a real-world problem faced by millions of job seekers. The insights obtained from TF-IDF keyword matching, BERT semantic analysis, and XGBoost ATS prediction help candidates understand exactly where their resume falls short and what to fix before applying. The RAG + FAISS suggestion engine adds a layer of intelligent, personalized guidance — all running locally with no API cost and full privacy.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 🚀 How to Run
 
