@@ -67,3 +67,8 @@ def extract_skills(text: str) -> Set[str]:
 def get_missing_skills(resume_skills: Set[str], jd_skills: Set[str]) -> List[str]:
     """Return skills present in JD but missing from the resume."""
     return sorted(jd_skills - resume_skills)
+
+
+def get_matched_skills(resume_skills: Set[str], jd_skills: Set[str]) -> List[str]:
+    """Return skills present in both resume and JD."""
+    return sorted(resume_skills & jd_skills)
