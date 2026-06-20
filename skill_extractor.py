@@ -45,3 +45,6 @@ SKILLS_DB = [
     "problem solving", "teamwork", "data analysis", "data visualization",
     "statistics", "a/b testing",
 ]
+
+# Sort longer phrases first so multi-word skills are matched before substrings
+SKILLS_DB_SORTED = sorted(set(SKILLS_DB), key=len, reverse=True)
