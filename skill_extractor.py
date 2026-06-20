@@ -48,3 +48,17 @@ SKILLS_DB = [
 
 # Sort longer phrases first so multi-word skills are matched before substrings
 SKILLS_DB_SORTED = sorted(set(SKILLS_DB), key=len, reverse=True)
+
+
+def extract_skills(text: str) -> Set[str]:
+    """
+    Extract skills present in the given (already cleaned/lowercased) text
+    using word-boundary phrase matching.
+    """
+    found = set()
+    for skill in SKILLS_DB_SORTED:
+        # Build a regex that handles special chars like '++', '#', '.'
+        pattern = r"(?<![a-z0-9])" + re.escape(skill) + r"(?![a-z0-9])"
+        if re.search(pattern, text):
+            found.add(skill)
+    return found
