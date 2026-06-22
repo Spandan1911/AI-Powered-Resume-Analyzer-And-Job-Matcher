@@ -32,3 +32,75 @@ KNOWLEDGE_BASE = [
     "Include certifications relevant to the target role (e.g., AWS Certified, Google Data Analytics) if you have them.",
     "If missing key skills from the JD, consider adding a 'Currently Learning' section or completing a short relevant project before applying.",
 ]
+
+
+class ResumeRAG:
+    """FAISS-backed retriever over the resume-tips knowledge base."""
+
+    def __init__(self):
+        self.model = SentenceTransformer("all-MiniLM-L6-v2")
+        self.documents = KNOWLEDGE_BASE
+        embeddings = self.model.encode(self.documents, convert_to_numpy=True)
+        embeddings = embeddings.astype("float32")
+        # Normalize for cosine similarity via inner product
+        faiss.normalize_L2(embeddings)
+        self.index = faiss.IndexFlatIP(embeddings.shape[1])
+        self.index.add(embeddings)
+
+    def retrieve(self, query: str, top_k: int = 4):
+        """Retrieve top_k most relevant tips for the query."""
+        query_emb = self.model.encode([query], convert_to_numpy=True).astype("float32")
+        faiss.normalize_L2(query_emb)
+        scores, indices = self.index.search(query_emb, top_k)
+        results = [self.documents[i] for i in indices[0] if i != -1]
+        return results
+
+
+def generate_suggestions(missing_skills, jd_skills, resume_skills, ats_score: float) -> dict:
+    """
+    Template-based RAG suggestion generator.
+    Retrieves relevant best-practice tips from the FAISS index and combines
+    them with rule-based suggestions specific to the missing skills.
+    """
+    rag = ResumeRAG()
+
+    query = f"Resume improvement tips for missing skills: {', '.join(missing_skills) if missing_skills else 'general improvement'}"
+    retrieved_tips = rag.retrieve(query, top_k=4)
+
+    suggestions = []
+
+    # Rule-based, missing-skill-specific suggestions
+    if missing_skills:
+        skill_list = ", ".join(missing_skills[:5])
+        suggestions.append(
+            f"Add or highlight experience with: {skill_list}. "
+            f"If you've used these tools even briefly (coursework, side projects), "
+            f"include them explicitly in your Skills or Projects section."
+        )
+    else:
+        suggestions.append("Great match! Your resume already covers all key skills mentioned in the job description.")
+
+    # ATS score-based suggestion
+    if ats_score < 50:
+        suggestions.append(
+            "Your ATS match score is low. Consider rewriting your summary and skills "
+            "section using terminology directly from the job description."
+        )
+    elif ats_score < 75:
+        suggestions.append(
+            "Your ATS match score is moderate. Adding 2-3 more JD-specific keywords "
+            "naturally within your experience bullet points could improve your ranking."
+        )
+    else:
+        suggestions.append(
+            "Your ATS match score is strong. Focus on quantifying your achievements "
+            "further to stand out among similarly matched candidates."
+        )
+
+    # Append retrieved best-practice tips
+    suggestions.extend(retrieved_tips)
+
+    return {
+        "ai_suggestions": suggestions,
+        "retrieved_context": retrieved_tips,
+    }
