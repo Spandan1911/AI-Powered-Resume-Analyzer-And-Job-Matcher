@@ -84,3 +84,10 @@ def train_model() -> xgb.XGBRegressor:
     model.fit(X, y)
     joblib.dump(model, MODEL_PATH)
     return model
+
+
+def load_or_train_model() -> xgb.XGBRegressor:
+    """Load cached model if present, else train a new one."""
+    if os.path.exists(MODEL_PATH):
+        return joblib.load(MODEL_PATH)
+    return train_model()
