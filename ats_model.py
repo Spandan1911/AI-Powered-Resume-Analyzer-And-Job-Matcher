@@ -103,3 +103,15 @@ def predict_ats_score(tfidf_sim: float, bert_sim: float,
     """
     model = load_or_train_model()
     resume_length_norm = min(resume_word_count / max_expected_words, 1.0)
+
+    features = pd.DataFrame([{
+        "tfidf_similarity": tfidf_sim,
+        "bert_similarity": bert_sim,
+        "skill_match_ratio": skill_match_ratio,
+        "resume_length_norm": resume_length_norm,
+        "num_matched_skills": num_matched,
+        "num_missing_skills": num_missing,
+    }])
+
+    pred = model.predict(features)[0]
+    return float(np.clip(pred, 0, 100))
