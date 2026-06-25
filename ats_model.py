@@ -91,3 +91,15 @@ def load_or_train_model() -> xgb.XGBRegressor:
     if os.path.exists(MODEL_PATH):
         return joblib.load(MODEL_PATH)
     return train_model()
+
+
+def predict_ats_score(tfidf_sim: float, bert_sim: float,
+                       skill_match_ratio: float, resume_word_count: int,
+                       num_matched: int, num_missing: int,
+                       max_expected_words: int = 1000) -> float:
+    """
+    Predict ATS score (0-100) given computed features.
+    resume_word_count is normalized by max_expected_words.
+    """
+    model = load_or_train_model()
+    resume_length_norm = min(resume_word_count / max_expected_words, 1.0)
