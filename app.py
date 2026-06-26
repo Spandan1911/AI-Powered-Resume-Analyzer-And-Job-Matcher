@@ -107,3 +107,13 @@ if analyze_clicked:
         with st.expander("🔧 Debug: Extracted JD Skills"):
             st.write(sorted(jd_skills))
 
+st.sidebar.header("ℹ️ About")
+st.sidebar.markdown("""
+**Pipeline:**
+1. Extract text from resume (PDF/DOCX/TXT)
+2. Extract skills via keyword/phrase matching
+3. Compute TF-IDF + BERT cosine similarity
+4. Predict ATS score using XGBoost
+5. Detect missing skills vs job description
+6. Generate AI suggestions via RAG + FAISS retrieval
+""")
